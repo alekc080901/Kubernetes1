@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: logs-collector
+spec:
+  schedule: "*/10 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          volumes:
+            - name: logs-volume
+              hostPath:
+                path: /var/log/shared
+                type: DirectoryOrCreate
+
+          containers:
+            - name: logs-collector
+              image: busybox
+              command:
+                - /bin/sh
+                - -c
+              args:
+                - tar -czf /tmp/app-logs-$(date +\%Y\%m\%d-\%H\%M\%S).tar.gz /app/logs/
+              volumeMounts:
+                - name: logs-volume
+                  mountPath: /app/logs
+                # Немного не по заданию, но замонтируем еще и /tmp, чтобы можно было посмотреть на результат
+                # выполнения из других подов
+                - name: logs-volume
+                  mountPath: /tmp
+          restartPolicy: OnFailure

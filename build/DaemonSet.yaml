@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: log-spy
+spec:
+  selector:
+    matchLabels:
+      app: log-spy
+  template:
+    metadata:
+      labels:
+        app: log-spy
+    spec:
+      volumes:
+        - name: logs-volume
+          hostPath:
+            path: /var/log/shared
+            type: DirectoryOrCreate
+
+      containers:
+        - name: busybox
+          image: busybox
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - 'tail -F /app/logs/file.log'
+          volumeMounts:
+            - name: logs-volume
+              mountPath: /app/logs

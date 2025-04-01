@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: homework1
+
+app:
+  log-file: "${LOG_PATH}"

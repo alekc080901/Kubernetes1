@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-application
+  labels:
+    app: java-application
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: java-application
+  template:
+    metadata:
+      name: java-application
+      labels:
+        app: java-application
+    spec:
+      volumes:
+        - name: logs-volume
+          # hostPath вместо emptyDir, чтобы делиться с DaemonSet
+          hostPath:
+            path: /var/log/shared
+            type: DirectoryOrCreate
+
+      containers:
+        - name: java-application
+          image: server
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: logs-volume
+              mountPath: /app/logs
+          envFrom:
+            - configMapRef:
+                name: java-application-env
+
