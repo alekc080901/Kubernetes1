@@ -1,7 +1,10 @@
 mvnw package -Dmaven.test.skip=true
 docker build -t server -f .\build\Dockerfile .
 
-kubectl label namespace default istio-injection=enabled
+kubectl apply -f .\build\istio\gateway.yaml
+kubectl apply -f .\build\istio\peerconfiguration.yaml
+kubectl apply -f .\build\istio\virtualservice.yaml
+kubectl apply -f .\build\istio\destinationrule.yaml
 
 kubectl apply -f .\build\ConfigMap.yaml
 kubectl apply -f .\build\Pod.yaml
