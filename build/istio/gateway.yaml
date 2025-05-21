@@ -12,11 +12,9 @@ spec:
         protocol: HTTP
       hosts:
         - "*"
-#    - port:
-#        number: 443
-#        name: https
-#        protocol: HTTPS
-#      hosts:
-#        - "*"
-#      tls:
-#        mode: ISTIO_MUTUAL
+    - port:
+        number: 9090
+        name: prometheus
+        protocol: HTTP
+      hosts:
+        - "*"

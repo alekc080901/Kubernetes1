@@ -24,12 +24,8 @@ public class FileService {
         }
     }
 
-    public void writeToFile(String filePath, String content) {
-        try {
-            Files.write(Path.of(filePath), (content + "\n").getBytes(), StandardOpenOption.APPEND);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void writeToFile(String filePath, String content) throws IOException {
+        Files.write(Path.of(filePath), (content + "\n").getBytes(), StandardOpenOption.APPEND);
     }
 
     public Optional<String> readFile(String filePath) {

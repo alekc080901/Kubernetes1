@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: java-application-monitor
+  namespace: istio-system
+  labels:
+    release: java-application-prometheus
+spec:
+  selector:
+    matchLabels:
+      app: java-application
+
+  namespaceSelector:
+    matchNames:
+      - default
+  endpoints:
+    - port: http
+      path: /actuator/prometheus
+      interval: 15s
+      scheme: http

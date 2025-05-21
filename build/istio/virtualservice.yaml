@@ -17,6 +17,14 @@ spec:
             exact: /logs
           method:
             exact: GET
+        - uri:
+            exact: /metrics
+          method:
+            exact: GET
+        - uri:
+            exact: /actuator/prometheus
+          method:
+            exact: GET
       route:
         - destination:
             host: java-application.default.svc.cluster.local

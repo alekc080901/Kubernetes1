@@ -2,16 +2,19 @@ spring:
   application:
     name: homework1
 
-#server:
-#  ssl:
-#    enabled: true
-#    key-store-type: PKCS12
-#    key-store: classpath:keystore.p12
-#    key-store-password: some-password
-#    key-alias: springboot
-#  port: 8443
-#  http:
-#    port: 8080
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
+  metrics:
+    distribution:
+      percentiles:
+        app.log.processing.time: 0.5,0.95,0.99
+  prometheus:
+    metrics:
+      export:
+        enabled: true
 
 
 app:
