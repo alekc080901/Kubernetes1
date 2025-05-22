@@ -1,0 +1,17 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: java-application-dr
+spec:
+  host: java-application.default.svc.cluster.local
+  trafficPolicy:
+    loadBalancer:
+      simple: LEAST_CONN
+    connectionPool:
+      tcp:
+        maxConnections: 3
+      http:
+        http2MaxRequests: 5
+        maxRequestsPerConnection: 1
+    tls:
+      mode: ISTIO_MUTUAL

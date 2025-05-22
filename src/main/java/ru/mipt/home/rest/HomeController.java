@@ -22,7 +22,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(@Value("${HOSTNAME:Can't get the hostname}") String hostname) {
-        return "Welcome to the custom app. The hostname is " + hostname + ".";
+        return "Welcome to the app. The hostname is " + hostname + ".";
     }
 
     @GetMapping("/status")
